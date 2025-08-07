@@ -5,6 +5,7 @@ import logo from '../../assets/redTeam.png'
 import BackgroundShapes from '../../components/background-shapes'
 import { Icon } from '../../components/icons'
 import InputWithIcon from '../../components/input-with-icon'
+import { Link } from 'react-router'
 
 
 export default function LoginPage() {
@@ -98,9 +99,11 @@ export default function LoginPage() {
                 </a>
               </div>
 
+              <Link to="employe/dashboard">
               <Button className="w-full h-12  bg-red-700 hover:bg-[#abaaa9] text-white">
                 Se connecter
               </Button>
+              </Link>
             </form>
 
             {/* Sign up link */}
