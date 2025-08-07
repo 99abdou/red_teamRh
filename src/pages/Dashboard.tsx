@@ -15,6 +15,12 @@ const Dashboard = () => {
   const [status, setStatus] = useState("")
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  
+  // État pour la pagination
+  const [currentPage, setCurrentPage] = useState(1)
+  const totalItems = 0 // À remplacer par vos vraies données depuis l'API
+  const itemsPerPage = 10
+  const totalPages = Math.max(1, Math.ceil(totalItems / itemsPerPage))
 
   return (
     <>
@@ -74,7 +80,13 @@ const Dashboard = () => {
       </div>
 
       <LeavesTable />
-      <Pagination />
+      <Pagination 
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={setCurrentPage}
+        totalItems={totalItems}
+        itemsPerPage={itemsPerPage}
+      />
     </div>
 
     {/* Modal pour nouvelle demande */}
