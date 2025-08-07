@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FiHome, FiClock, FiList, FiLogOut, FiBookOpen, FiMenu, FiX } from 'react-icons/fi';
+import Logo from '../assets/redTeam.png'
 
 const Sidebar = () => {
   const location = useLocation();
@@ -17,10 +18,10 @@ const Sidebar = () => {
   };
 
   const menuItems = [
-    { path: '/dashboard', icon: FiHome, label: 'Dashboard' },
-    { path: '/demande', icon: FiClock, label: 'Demander congé' },
-    { path: '/historique', icon: FiList, label: 'Historique' },
-    { path: '/solde', icon: FiBookOpen, label: 'Solde de congé' },
+    { path: 'dashboard', icon: FiHome, label: 'Dashboard' },
+    { path: 'demandeConge', icon: FiClock, label: 'Demander congé' },
+    { path: 'historique', icon: FiList, label: 'Historique' },
+    { path: 'solde', icon: FiBookOpen, label: 'Solde de congé' },
   ];
 
   return (
@@ -50,10 +51,17 @@ const Sidebar = () => {
         w-64
       `}>
         {/* En-tête */}
-        <div className="p-6 text-center font-bold text-xl border-b border-purple-600/30">
+        <div className="p-3 text-center font-bold text-xl border-b border-purple-600/30">
           <div className="flex items-center justify-between lg:justify-center">
             <span className="lg:hidden">Menu</span>
+            <div className='flex justify-center items-center'>
+              <img
+                src={Logo}
+                alt="Logo"
+                className="h-10 w-10 rounded-full mr-2"
+              />
             <span className="hidden lg:block">Espace Employé</span>
+            </div>
             <button
               onClick={closeSidebar}
               className="lg:hidden p-1 hover:bg-blue-700 rounded"
