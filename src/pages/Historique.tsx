@@ -68,7 +68,12 @@ const demandes = [
   }
 ]
 
-const AnimatedCounter = ({ value, delay }) => {
+interface AnimatedCounterProps {
+  value: number;
+  delay: number;
+}
+
+const AnimatedCounter: React.FC<AnimatedCounterProps> = ({ value, delay }) => {
   const { count, isAnimating } = useCounter(value, 2000, delay)
   
   return (
@@ -86,7 +91,7 @@ const Historique = () => {
   const [itemsPerPage] = useState(5)
 
   // Fonction pour formater les dates
-  const formatDate = (dateString) => {
+  const formatDate = (dateString : string) => {
     return new Date(dateString).toLocaleDateString('fr-FR', {
       day: '2-digit',
       month: '2-digit',
@@ -95,10 +100,10 @@ const Historique = () => {
   }
 
   // Fonction pour calculer la durée en jours
-  const calculateDuration = (debut, fin) => {
+  const calculateDuration = (debut : string, fin : string) => {
     const start = new Date(debut)
     const end = new Date(fin)
-    const diffTime = Math.abs(end - start)
+    const diffTime = Math.abs(end.getTime() - start.getTime())
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
     return diffDays + 1 // +1 car on compte le jour de début
   }
@@ -130,7 +135,7 @@ const Historique = () => {
     return { total, approuvees, rejetees, enAttente }
   }, [])
 
-  const getStatusColor = (statut) => {
+  const getStatusColor = (statut : string) => {
     switch (statut) {
       case 'Approuvé':
         return 'bg-green-100 text-green-800 border-green-200'

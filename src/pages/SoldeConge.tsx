@@ -252,7 +252,7 @@ const SoldeConge = () => {
         <DialogContent className="max-w-4xl">
           <DialogHeader>
             <DialogTitle className="flex items-center">
-              <span className="text-2xl mr-3">{selectedSolde?.icone}</span>
+              <span className="text-2xl mr-3">{(selectedSolde as any)?.icone}</span>
               Détails - {selectedType}
             </DialogTitle>
           </DialogHeader>
@@ -290,13 +290,13 @@ const SoldeConge = () => {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Restant :</span>
-                  <span className="font-semibold text-green-600">{selectedSolde?.restant ?? 0} jours</span>
+                  <span className="font-semibold text-green-600">{(selectedSolde as any)?.restant ?? 0} jours</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Taux d'utilisation :</span>
                   <span className="font-semibold">
-                    {selectedSolde && selectedSolde.total > 0
-                      ? Math.round((selectedSolde.utilise / selectedSolde.total) * 100)
+                    {(selectedSolde as any)?.total > 0
+                      ? Math.round(((selectedSolde as any).utilise / (selectedSolde as any).total) * 100)
                       : 0
                     }%
                   </span>

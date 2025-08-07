@@ -53,8 +53,8 @@ const Dashboard = () => {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
-            <Select value={status} className="bg-white" onValueChange={setStatus}>
-              <SelectTrigger>
+            <Select value={status} onValueChange={setStatus}>
+              <SelectTrigger className="bg-white">
                 <SelectValue placeholder="Choisir un" />
               </SelectTrigger>
               <SelectContent>

@@ -12,9 +12,9 @@ const DemandeConge = () => {
     description: ''
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [errors, setErrors] = useState({})
+  const [errors, setErrors] = useState<Record<string, string>>({})
 
-  const handleInputChange = (field, value) => {
+  const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({
       ...prev,
       [field]: value
@@ -30,28 +30,31 @@ const DemandeConge = () => {
 
   const validateForm = () => {
     const newErrors = {}
-    
-    if (!formData.type) {
-      newErrors.type = 'Le type de congé est requis'
+    if (!(formData as { type?: string }).type) {
+      (newErrors as Record<string, string>).type = 'Le type de congé est requis'
     }
-    if (!formData.debut) {
-      newErrors.debut = 'La date de début est requise'
+    if (!(formData as { debut?: string }).debut) {
+      (newErrors as Record<string, string>).debut = 'La date de début est requise'
     }
-    if (!formData.fin) {
-      newErrors.fin = 'La date de fin est requise'
+    if (!(formData as { fin?: string }).fin) {
+      (newErrors as Record<string, string>).fin = 'La date de fin est requise'
     }
-    if (formData.debut && formData.fin && new Date(formData.debut) > new Date(formData.fin)) {
-      newErrors.fin = 'La date de fin doit être après la date de début'
+    if (
+      (formData as { debut?: string }).debut &&
+      (formData as { fin?: string }).fin &&
+      new Date((formData as { debut: string }).debut) > new Date((formData as { fin: string }).fin)
+    ) {
+      (newErrors as Record<string, string>).fin = 'La date de fin doit être après la date de début'
     }
-    if (!formData.motif.trim()) {
-      newErrors.motif = 'Le motif est requis'
+    if (!(formData as { motif?: string }).motif || !(formData as { motif: string }).motif.trim()) {
+      (newErrors as Record<string, string>).motif = 'Le motif est requis'
     }
 
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
   }
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     
     if (!validateForm()) {

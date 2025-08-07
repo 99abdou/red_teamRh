@@ -5,11 +5,11 @@ import { FiHome, FiClock, FiList, FiLogOut, FiBookOpen, FiMenu, FiX } from 'reac
 const Sidebar = () => {
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
-  
-  const isActive = (path) => location.pathname === path;
+
+  const isActive = (path: string) => location.pathname === path;
 
   const toggleSidebar = () => {
-    setIsOpen(!isOpen);
+    setIsOpen((prev) => !prev);
   };
 
   const closeSidebar = () => {

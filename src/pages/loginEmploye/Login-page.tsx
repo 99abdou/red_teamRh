@@ -1,12 +1,11 @@
 import { Button } from '../../components/ui/button'
-import { Input } from '../../components/ui/input'
 import { Checkbox } from '../../components/ui/checkbox'
 import logo from '../../assets/redTeam.png'
 
 import BackgroundShapes from '../../components/background-shapes'
 import { Icon } from '../../components/icons'
 import InputWithIcon from '../../components/input-with-icon'
-import React from 'react'
+
 
 export default function LoginPage() {
   return (
