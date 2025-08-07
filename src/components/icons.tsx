@@ -5,7 +5,8 @@ import {
     MdMoreHoriz, 
     MdCheck,
     MdVisibility,
-    MdVisibilityOff 
+    MdVisibilityOff,
+    MdNotifications 
   } from 'react-icons/md'
   import { 
     FaGoogle, 
@@ -43,7 +44,8 @@ import {
     Document: HiOutlineDocumentText,
     Menu: HiOutlineMenu,
     Close: HiOutlineX,
-    MoreHorizontal: MdMoreHoriz
+    MoreHorizontal: MdMoreHoriz,
+    Notifications: MdNotifications
   }
   
   // Composant d'icône générique avec props communes
@@ -66,6 +68,9 @@ import {
       <FaFacebookF className={className} {...props} />,
       
     Document: ({ className = "w-5 h-5", ...props }: IconProps) => 
-      <HiOutlineDocumentText className={className} {...props} />
+      <HiOutlineDocumentText className={className} {...props} />,
+      
+    Notifications: ({ className = "w-5 h-5", ...props }: IconProps) => 
+      <MdNotifications className={className} {...props} />
   }
   
