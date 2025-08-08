@@ -8,6 +8,7 @@ import { StatsCards } from "../components/stats-cards.js"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../components/ui/dialog.js"
 import { LeaveRequestForm } from "../components/leave-request-form"
 
+
 const Dashboard = () => {
   const [searchTerm, setSearchTerm] = useState("")
   const [fromDate, setFromDate] = useState("")
@@ -19,6 +20,8 @@ const Dashboard = () => {
   return (
     <>
     <StatsCards />
+  
+
       <div className="bg-white mt-4 rounded-lg border border-gray-200">
       <div className="p-4 sm:p-6 border-b border-gray-200">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 space-y-4 sm:space-y-0">
@@ -72,7 +75,6 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-
       <LeavesTable />
       <Pagination />
     </div>

@@ -18,10 +18,10 @@ const Sidebar = () => {
   };
 
   const menuItems = [
-    { path: 'dashboard', icon: FiHome, label: 'Dashboard' },
-    { path: 'demandeConge', icon: FiClock, label: 'Demander congé' },
-    { path: 'historique', icon: FiList, label: 'Historique' },
-    { path: 'solde', icon: FiBookOpen, label: 'Solde de congé' },
+    { path: '/employe/dashboard', icon: FiHome, label: 'Dashboard' },
+    { path: '/employe/demandeConge', icon: FiClock, label: 'Demander congé' },
+    { path: '/employe/historique', icon: FiList, label: 'Historique' },
+    { path: '/employe/solde', icon: FiBookOpen, label: 'Solde de congé' },
   ];
 
   return (
