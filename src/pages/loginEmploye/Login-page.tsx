@@ -10,7 +10,7 @@ import { Link } from 'react-router'
 
 export default function LoginPage() {
   return (
-    <div className="min-h-screen bg-white relative overflow-hidden">
+    <div className="min-h-screen bg-gray-100 relative overflow-hidden">
 
       <div className="relative z-10 min-h-screen flex">
         {/* Left Side - Login Form */}
@@ -36,17 +36,11 @@ export default function LoginPage() {
               </div>
             </div>
           </div>
-
-          {/* Decorative circles */}
-
-          <div
-            className="absolute bottom-32 right-20 w-20 h-20 bg-black rounded-full animate-bounce"
-            style={{ animationDelay: '0.8s', animationDuration: '1s' }}
-          ></div>
         </div>
 
 
         <div className="flex-1 flex items-center justify-center p-8">
+            <div className="shadow-lg bg-white rounded-lg p-4">
           <div className="w-full max-w-md space-y-8">
             {/* Logo */}
             <div className="flex justify-center">
@@ -112,6 +106,7 @@ export default function LoginPage() {
               <a href="#" className="text-rose-500 hover:text-rose-600 font-medium">
                 Envoi un message de demande de compte
               </a>
+            </div>
             </div>
           </div>
         </div>

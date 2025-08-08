@@ -14,7 +14,7 @@ const Navbar = () => {
   return (
     <>
       <div className="h-16 bg-white shadow flex items-center justify-between px-4 lg:px-6 fixed top-0 left-0 lg:left-64 right-0 z-30">
-        <div className="font-bold text-lg lg:text-xl">Tableau de bord</div>
+        <div className="font-bold text-lg lg:text-xl">Espace Employé</div>
         <div className="flex items-center space-x-2 lg:space-x-3">
           {/* Icône de notification */}
           <button className="relative p-2 text-gray-600 hover:text-gray-800 hover:bg-gray-100 rounded-full transition-colors">

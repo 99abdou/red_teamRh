@@ -1,5 +1,6 @@
 
 import { useCounter } from "../hooks/useCounter"
+import { useRequests } from "../contexts/RequestContext"
 
 interface StatCardProps {
     number: string
@@ -30,11 +31,50 @@ interface StatCardProps {
   }
   
   export function StatsCards() {
+    const { getRequestsByStatus, getRequestsByType } = useRequests()
+    
+    // Calculer les statistiques
+    const pendingRequests = getRequestsByStatus('pending').length
+    const declinedRequests = getRequestsByStatus('declined').length
+    const cancelledRequests = getRequestsByStatus('cancelled').length
+    
+    // Calculer les congés disponibles (exemple: 20 jours par an)
+    const totalLeaveDays = 20
+    const usedLeaveDays = getRequestsByType('conge')
+      .filter(req => req.status === 'approved')
+      .reduce((total, req) => {
+        const start = new Date(req.startDate)
+        const end = new Date(req.endDate)
+        const days = Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)) + 1
+        return total + days
+      }, 0)
+    const remainingLeaveDays = totalLeaveDays - usedLeaveDays
+
     const stats = [
-      { number: "16", label: "invalide", sublabel: "congés", color: "blue" as const },
-      { number: "08", label: "Précédente", sublabel: "congés inutilisées", color: "purple" as const },
-      { number: "02", label: "Congés en attente", sublabel: "Demandes", color: "orange" as const },
-      { number: "02", label: "Rejetée", sublabel: "Congés", color: "red" as const },
+      { 
+        number: remainingLeaveDays.toString(), 
+        label: "Congés disponibles", 
+        sublabel: "jours restants", 
+        color: "blue" as const 
+      },
+      { 
+        number: usedLeaveDays.toString(), 
+        label: "Congés utilisés", 
+        sublabel: "jours pris", 
+        color: "purple" as const 
+      },
+      { 
+        number: pendingRequests.toString(), 
+        label: "Demandes en attente", 
+        sublabel: "en cours de traitement", 
+        color: "orange" as const 
+      },
+      { 
+        number: (declinedRequests + cancelledRequests).toString(), 
+        label: "Demandes rejetées", 
+        sublabel: "refusées ou annulées", 
+        color: "red" as const 
+      },
     ]
   
     return (

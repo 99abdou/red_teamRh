@@ -2,8 +2,15 @@ import { useState } from 'react'
 import { Button } from '../components/ui/button'
 import { Input } from '../components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select'
+import { useRequests } from '../contexts/RequestContext'
+import { useNavigate } from 'react-router-dom'
+
+type FormType = 'conge' | 'absence' | 'formation' | 'autre'
 
 const DemandeConge = () => {
+  const { addRequest } = useRequests()
+  const navigate = useNavigate()
+  const [activeForm, setActiveForm] = useState<FormType>('conge')
   const [formData, setFormData] = useState({
     type: '',
     debut: '',
@@ -31,7 +38,7 @@ const DemandeConge = () => {
   const validateForm = () => {
     const newErrors = {}
     if (!(formData as { type?: string }).type) {
-      (newErrors as Record<string, string>).type = 'Le type de congé est requis'
+      (newErrors as Record<string, string>).type = 'Le type est requis'
     }
     if (!(formData as { debut?: string }).debut) {
       (newErrors as Record<string, string>).debut = 'La date de début est requise'
@@ -63,9 +70,17 @@ const DemandeConge = () => {
 
     setIsSubmitting(true)
     try {
-      // Simulation d'appel API
-      await new Promise(resolve => setTimeout(resolve, 1500))
-      console.log('Données soumises:', formData)
+      // Ajouter la demande au contexte
+      addRequest({
+        type: activeForm,
+        subtype: formData.type,
+        startDate: formData.debut,
+        endDate: formData.fin,
+        reason: formData.motif,
+        description: formData.description,
+        employeeName: 'Moussa Diatta', // À remplacer par les vraies données utilisateur
+        employeeEmail: 'moussa.diatta@example.com' // À remplacer par les vraies données utilisateur
+      })
       
       // Réinitialiser le formulaire après succès
       setFormData({
@@ -76,8 +91,11 @@ const DemandeConge = () => {
         description: ''
       })
       
+      // Rediriger vers le dashboard
+      navigate('/employe/dashboard')
+      
       // Ici vous pouvez ajouter une notification de succès
-      alert('Demande soumise avec succès!')
+      alert(`${getFormTitle()} soumise avec succès!`)
     } catch (error) {
       console.error('Erreur lors de la soumission:', error)
       // Ici vous pouvez ajouter une notification d'erreur
@@ -87,31 +105,111 @@ const DemandeConge = () => {
     }
   }
 
+  const getFormTitle = () => {
+    switch (activeForm) {
+      case 'conge': return 'Demande de congé'
+      case 'absence': return 'Demande d\'absence'
+      case 'formation': return 'Demande de formation'
+      case 'autre': return 'Demande'
+      default: return 'Demande'
+    }
+  }
+
+  const getTypeOptions = () => {
+    switch (activeForm) {
+      case 'conge':
+        return [
+          { value: 'annuel', label: 'Congé annuel' },
+          { value: 'maladie', label: 'Congé maladie' },
+          { value: 'maternite', label: 'Congé maternité' },
+          { value: 'paternite', label: 'Congé paternité' },
+          { value: 'formation', label: 'Congé formation' },
+          { value: 'autre', label: 'Autre' }
+        ]
+      case 'absence':
+        return [
+          { value: 'medicale', label: 'Absence médicale' },
+          { value: 'personnelle', label: 'Absence personnelle' },
+          { value: 'familiale', label: 'Absence familiale' },
+          { value: 'autre', label: 'Autre' }
+        ]
+      case 'formation':
+        return [
+          { value: 'interne', label: 'Formation interne' },
+          { value: 'externe', label: 'Formation externe' },
+          { value: 'certification', label: 'Certification' },
+          { value: 'autre', label: 'Autre' }
+        ]
+      case 'autre':
+        return [
+          { value: 'autorisation', label: 'Autorisation spéciale' },
+          { value: 'deplacement', label: 'Déplacement professionnel' },
+          { value: 'autre', label: 'Autre' }
+        ]
+      default:
+        return []
+    }
+  }
+
+  const tabs = [
+    { id: 'conge', label: 'Demande de congé', icon: '🏖️' },
+    { id: 'absence', label: 'Demande d\'absence', icon: '⏰' },
+    { id: 'formation', label: 'Demande de formation', icon: '📚' },
+    { id: 'autre', label: 'Autre demande', icon: '📝' }
+  ]
+
   return (
-    <div className="max-w-2xl mx-auto p-4 sm:p-6">
+    <div className="max-w-4xl mx-auto p-4 sm:p-6">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Demande de congé</h1>
-        <p className="text-gray-600">Remplissez le formulaire ci-dessous pour soumettre votre demande de congé</p>
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">Demandes</h1>
+        <p className="text-gray-600">Sélectionnez le type de demande et remplissez le formulaire correspondant</p>
+      </div>
+
+      {/* Onglets */}
+      <div className="mb-6">
+        <div className="border-b border-gray-200">
+          <nav className="-mb-px flex space-x-8" aria-label="Tabs">
+            {tabs.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveForm(tab.id as FormType)}
+                className={`
+                  py-2 px-1 border-b-2 font-medium text-sm flex items-center space-x-2
+                  ${activeForm === tab.id
+                    ? 'border-red-500 text-red-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                  }
+                `}
+              >
+                <span>{tab.icon}</span>
+                <span>{tab.label}</span>
+              </button>
+            ))}
+          </nav>
+        </div>
       </div>
 
       <div className="bg-white shadow-lg rounded-lg border border-gray-200">
+        <div className="p-4 sm:p-6 border-b border-gray-200">
+          <h2 className="text-xl font-semibold text-gray-900">{getFormTitle()}</h2>
+        </div>
+
         <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-6">
-          {/* Type de congé */}
+          {/* Type */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Type de congé *
+              Type *
             </label>
             <Select value={formData.type} onValueChange={(value) => handleInputChange('type', value)}>
               <SelectTrigger className={errors.type ? 'border-red-500' : ''}>
-                <SelectValue placeholder="Sélectionner un type de congé" />
+                <SelectValue placeholder={`Sélectionner un type de ${activeForm === 'conge' ? 'congé' : activeForm === 'absence' ? 'd\'absence' : activeForm === 'formation' ? 'de formation' : 'demande'}`} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="annuel">Congé annuel</SelectItem>
-                <SelectItem value="maladie">Congé maladie</SelectItem>
-                <SelectItem value="maternite">Congé maternité</SelectItem>
-                <SelectItem value="paternite">Congé paternité</SelectItem>
-                <SelectItem value="formation">Congé formation</SelectItem>
-                <SelectItem value="autre">Autre</SelectItem>
+                {getTypeOptions().map((option) => (
+                  <SelectItem key={option.value} value={option.value}>
+                    {option.label}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
             {errors.type && (
@@ -158,7 +256,7 @@ const DemandeConge = () => {
               Motif *
             </label>
             <Input
-              placeholder="Raison de votre demande de congé"
+              placeholder={`Raison de votre ${activeForm === 'conge' ? 'demande de congé' : activeForm === 'absence' ? 'demande d\'absence' : activeForm === 'formation' ? 'demande de formation' : 'demande'}`}
               value={formData.motif}
               onChange={(e) => handleInputChange('motif', e.target.value)}
               className={errors.motif ? 'border-red-500' : ''}
@@ -203,7 +301,7 @@ const DemandeConge = () => {
             </Button>
             <Button
               type="submit"
-              className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700"
+              className="bg-gradient-to-r from-green-600 to-green-600 hover:from-green-700 hover:to-green-700"
               disabled={isSubmitting}
             >
               {isSubmitting ? (
@@ -215,7 +313,7 @@ const DemandeConge = () => {
                   Envoi en cours...
                 </>
               ) : (
-                'Soumettre la demande'
+                `Soumettre la ${activeForm === 'conge' ? 'demande de congé' : activeForm === 'absence' ? 'demande d\'absence' : activeForm === 'formation' ? 'demande de formation' : 'demande'}`
               )}
             </Button>
           </div>

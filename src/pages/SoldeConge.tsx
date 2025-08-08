@@ -311,7 +311,7 @@ const SoldeConge = () => {
       <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-6">
         <h2 className="text-lg font-semibold mb-4">Actions rapides</h2>
         <div className="flex flex-wrap gap-3">
-          <Button className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700">
+          <Button className="bg-gradient-to-r from-red-600 to-red-600 text-white hover:from-red-500 cursor-pointer hover:to-red-700 w-full sm:w-auto">
             📋 Nouvelle demande
           </Button>
           <Button variant="outline">

@@ -34,17 +34,17 @@ const Sidebar = () => {
         {isOpen ? <FiX size={24} /> : <FiMenu size={24} />}
       </button>
 
-      {/* Overlay pour mobile */}
-      {isOpen && (
+      {/*{isOpen && (
         <div
-          className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-40"
-          onClick={closeSidebar}
+        className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-40"
+        onClick={closeSidebar}
         />
       )}
+       Overlay pour mobile */}
 
       {/* Sidebar */}
       <div className={`
-        h-screen bg-gradient-to-b from-purple-900 via-purple-800 to-indigo-900 text-white flex flex-col fixed z-40
+        h-screen bg-gradient-to-b from-red-900 via-red-800 to-white-900 text-white flex flex-col fixed z-40
         transition-transform duration-300 ease-in-out
         ${isOpen ? 'translate-x-0' : '-translate-x-full'}
         lg:translate-x-0 lg:fixed
@@ -53,14 +53,12 @@ const Sidebar = () => {
         {/* En-tête */}
         <div className="p-3 text-center font-bold text-xl border-b border-purple-600/30">
           <div className="flex items-center justify-between lg:justify-center">
-            <span className="lg:hidden">Menu</span>
             <div className='flex justify-center items-center'>
               <img
                 src={Logo}
                 alt="Logo"
-                className="h-10 w-10 rounded-full mr-2"
+                className="h-10 w-20 rounded-full mr-2"
               />
-            <span className="hidden lg:block">Espace Employé</span>
             </div>
             <button
               onClick={closeSidebar}
@@ -83,8 +81,8 @@ const Sidebar = () => {
                 className={`
                   flex items-center space-x-3 p-3 rounded-lg transition-colors
                   ${isActive(item.path) 
-                    ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg' 
-                    : 'hover:bg-purple-700/50 text-purple-100 hover:text-white'
+                    ? 'bg-gradient-to-r from-red-800 to-red-800 text-red shadow-lg' 
+                    : 'hover:bg-white text-white hover:text-red-600'
                   }
                 `}
               >
@@ -96,9 +94,10 @@ const Sidebar = () => {
         </nav>
 
         {/* Déconnexion */}
-        <div className="px-4 py-4 border-t border-purple-600/30">
+        <div className="px-4 py-4 border-t border-gray-600/30">
+        <Link to='/'>
           <button 
-            className="flex items-center space-x-3 w-full p-3 hover:bg-red-600 rounded-lg cursor-pointer transition-colors text-red-100 hover:text-white"
+            className="flex items-center space-x-3 w-full p-3 hover:bg-red-600 rounded-lg cursor-pointer transition-colors text-black hover:text-white"
             onClick={() => {
               // Logique de déconnexion ici
               console.log('Déconnexion');
@@ -108,6 +107,7 @@ const Sidebar = () => {
             <FiLogOut size={20} />
             <span className="font-medium">Déconnexion</span>
           </button>
+          </Link>
         </div>
       </div>
     </>

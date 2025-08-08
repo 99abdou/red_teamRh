@@ -5,6 +5,7 @@ import DemandeConge from './pages/DemandeConge';
 import Historique from './pages/Historique';
 import SoldeConge from './pages/SoldeConge';
 import LoginPage from './pages/loginEmploye/Login-page';
+import { RequestProvider } from './contexts/RequestContext';
 
 
 const router = createBrowserRouter([
@@ -43,7 +44,11 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <RequestProvider>
+      <RouterProvider router={router} />
+    </RequestProvider>
+  );
 }
 
 export default App;
