@@ -51,7 +51,7 @@ const GoogleCalendar = () => {
       resource: event,
     });
 
-    request.execute((event) => {
+    request.execute((event: any) => {
       alert(`Événement créé : ${event.htmlLink}`);
     });
   };
